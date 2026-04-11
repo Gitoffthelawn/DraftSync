@@ -1,0 +1,31 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+
+# Rider / ReSharper
+.idea/
+*.DotSettings.user
+
+# Plugin config (contains local machine paths and machine ID — not for source control)
+NppSync.ini
+NppSync.dismissed.json
+
+# Dev artifacts
+*.log
+progress.md
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
