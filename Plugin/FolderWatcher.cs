@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
     /// Monitors the sync folder for new/modified/deleted files using

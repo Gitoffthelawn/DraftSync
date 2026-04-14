@@ -2,10 +2,10 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
-    /// Per-note metadata stored in .nppsync/&lt;name&gt;.meta.json
+    /// Per-note metadata stored in .draftsync/&lt;name&gt;.meta.json
     /// </summary>
     public class NoteMetadata
     {

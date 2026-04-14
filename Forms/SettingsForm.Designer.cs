@@ -1,4 +1,4 @@
-namespace NppSync.Forms
+namespace DraftSync.Forms
 {
     partial class SettingsForm
     {
@@ -103,13 +103,13 @@ namespace NppSync.Forms
 
             this.AcceptButton = this.btnOK;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(390, row + 40);
+            this.ClientSize = new System.Drawing.Size(450, row + 40);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "NppSync Settings";
+            this.Text = "DraftSync Settings";
 
             this.Controls.Add(this.lblSyncFolder);
             this.Controls.Add(this.txtSyncFolder);

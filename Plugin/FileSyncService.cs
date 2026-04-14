@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
     /// Reads and writes note content and metadata to/from the shared sync folder.

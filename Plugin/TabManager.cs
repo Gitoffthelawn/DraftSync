@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
-    /// Tracks which open Notepad++ tabs are managed by NppSync,
+    /// Tracks which open Notepad++ tabs are managed by DraftSync,
     /// keyed by their file path (lowercased for comparison).
     /// </summary>
     public class TabManager

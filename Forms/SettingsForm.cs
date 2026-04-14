@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
-using NppSync.Plugin;
+using DraftSync.Plugin;
 
-namespace NppSync.Forms
+namespace DraftSync.Forms
 {
     public partial class SettingsForm : Form
     {
@@ -37,7 +37,7 @@ namespace NppSync.Forms
         {
             using (var dlg = new FolderBrowserDialog())
             {
-                dlg.Description = "Select your NppSync shared folder (e.g. Google Drive folder)";
+                dlg.Description = "Select your DraftSync shared folder (e.g. Google Drive folder)";
                 dlg.SelectedPath = txtSyncFolder.Text;
                 if (dlg.ShowDialog(this) == DialogResult.OK)
                     txtSyncFolder.Text = dlg.SelectedPath;
@@ -51,7 +51,7 @@ namespace NppSync.Forms
             {
                 MessageBox.Show(
                     $"Sync folder does not exist:\n{folder}\n\nPlease choose an existing folder.",
-                    "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace NppSync.Forms
             if (!ext.StartsWith(".")) ext = "." + ext;
             if (ext.Length < 2)
             {
-                MessageBox.Show("Please enter a valid file extension.", "NppSync",
+                MessageBox.Show("Please enter a valid file extension.", "DraftSync",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }

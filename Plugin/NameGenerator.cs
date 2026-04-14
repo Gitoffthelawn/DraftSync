@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
     /// Generates fun two-word names for synced notes (e.g. "fuzzy-lobster").

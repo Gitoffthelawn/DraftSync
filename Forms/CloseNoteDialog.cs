@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace NppSync.Forms
+namespace DraftSync.Forms
 {
     public enum CloseNoteResult { Dismiss, DeleteEverywhere, Cancel }
 

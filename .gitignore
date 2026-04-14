@@ -18,8 +18,8 @@ packages/
 *.DotSettings.user
 
 # Plugin config (contains local machine paths and machine ID — not for source control)
-NppSync.ini
-NppSync.dismissed.json
+DraftSync.ini
+DraftSync.dismissed.json
 
 # Dev artifacts
 *.log

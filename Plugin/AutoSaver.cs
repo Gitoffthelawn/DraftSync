@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
     /// Manages debounced auto-saves for managed tabs.

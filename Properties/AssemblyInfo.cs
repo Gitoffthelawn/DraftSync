@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NppSync — Notepad++ Cross-Machine Tab Sync Plugin")]
+[assembly: AssemblyTitle("DraftSync — Notepad++ Cross-Machine Tab Sync Plugin")]
 [assembly: AssemblyDescription("Syncs unsaved scratch notes across machines via a shared folder (Google Drive).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NppSync")]
+[assembly: AssemblyProduct("DraftSync")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

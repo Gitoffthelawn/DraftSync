@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
     /// Marshals work from background threads (FolderWatcher, AutoSaver callbacks)
@@ -14,7 +14,7 @@ namespace NppSync.Plugin
     public class UiThreadDispatcher : System.Windows.Forms.NativeWindow, IDisposable
     {
         // An application-defined window message
-        private const int WM_NPPSYNC_INVOKE = 0x8000 + 42;
+        private const int WM_DRAFTSYNC_INVOKE = 0x8000 + 42;
         private const int WM_COMMAND        = 0x0111;
         private const int WM_CLOSE          = 0x0010;
         private const uint IDM_FILE_NEW     = 40000 + 1000 + 1; // NppMenuCmd.IDM_FILE_NEW
@@ -46,12 +46,12 @@ namespace NppSync.Plugin
         {
             if (_instance == null) return;
             _instance._queue.Enqueue(action);
-            PostMessage(PluginBase.nppData._nppHandle, WM_NPPSYNC_INVOKE, IntPtr.Zero, IntPtr.Zero);
+            PostMessage(PluginBase.nppData._nppHandle, WM_DRAFTSYNC_INVOKE, IntPtr.Zero, IntPtr.Zero);
         }
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
-            if (m.Msg == WM_NPPSYNC_INVOKE)
+            if (m.Msg == WM_DRAFTSYNC_INVOKE)
             {
                 while (_queue.TryDequeue(out Action action))
                 {

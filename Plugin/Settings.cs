@@ -4,17 +4,17 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
-    /// Plugin settings backed by NppSync.ini in the Notepad++ plugin config directory.
+    /// Plugin settings backed by DraftSync.ini in the Notepad++ plugin config directory.
     /// </summary>
     public class Settings
     {
         private readonly string _iniPath;
 
         // ── INI section ──────────────────────────────────────────────────────
-        private const string Section = "NppSync";
+        private const string Section = "DraftSync";
 
         // ── Defaults ──────────────────────────────────────────────────────────
         public const string DefaultFileExtension = ".txt";
@@ -35,13 +35,13 @@ namespace NppSync.Plugin
 
         // ── Derived helpers ───────────────────────────────────────────────────
         public bool SyncFolderValid => !string.IsNullOrWhiteSpace(SyncFolder) && Directory.Exists(SyncFolder);
-        public string MetaFolder => SyncFolderValid ? Path.Combine(SyncFolder, ".nppsync") : null;
+        public string MetaFolder => SyncFolderValid ? Path.Combine(SyncFolder, ".draftsync") : null;
         public string DismissedFilePath { get; }
 
         public Settings(string configDir)
         {
-            _iniPath = Path.Combine(configDir, "NppSync.ini");
-            DismissedFilePath = Path.Combine(configDir, "NppSync.dismissed.json");
+            _iniPath = Path.Combine(configDir, "DraftSync.ini");
+            DismissedFilePath = Path.Combine(configDir, "DraftSync.dismissed.json");
         }
 
         // ── Load / Save ───────────────────────────────────────────────────────

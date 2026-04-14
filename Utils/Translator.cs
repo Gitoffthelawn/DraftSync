@@ -1,4 +1,4 @@
-// Stub: NppSync does not support UI translation.
+// Stub: DraftSync does not support UI translation.
 // This file exists only because PluginInfrastructure/NppPluginNETBase.cs references Translator.
 using System.Windows.Forms;
 

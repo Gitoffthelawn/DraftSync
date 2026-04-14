@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace NppSync.Plugin
+namespace DraftSync.Plugin
 {
     /// <summary>
     /// Maintains the local list of notes dismissed by this machine.
-    /// Stored in NppSync.dismissed.json in the plugin config directory.
+    /// Stored in DraftSync.dismissed.json in the plugin config directory.
     /// </summary>
     public class DismissedList
     {

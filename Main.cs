@@ -5,20 +5,20 @@ using System.Threading;
 using System.Windows.Forms;
 using Kbg.NppPluginNET.PluginInfrastructure;
 using NppDemo.Utils;
-using NppSync.Forms;
-using NppSync.Plugin;
+using DraftSync.Forms;
+using DraftSync.Plugin;
 using static Kbg.NppPluginNET.PluginInfrastructure.Win32;
 
 namespace Kbg.NppPluginNET
 {
     /// <summary>
-    /// NppSync plugin entry point.
+    /// DraftSync plugin entry point.
     /// All methods called by the Notepad++ plugin infrastructure run on the UI thread.
     /// </summary>
     class Main
     {
         // ── Plugin identity ────────────────────────────────────────────────────
-        internal const string PluginName = "NppSync";
+        internal const string PluginName = "DraftSync";
         public static readonly string PluginConfigDirectory =
             Path.Combine(Npp.notepad.GetConfigDirectory(), PluginName);
 
@@ -198,8 +198,8 @@ namespace Kbg.NppPluginNET
             if (!_settings.SyncFolderValid)
             {
                 MessageBox.Show(
-                    "NppSync: sync folder not found or not configured.\nPlease set it via Plugins > NppSync > Settings.",
-                    "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "DraftSync: sync folder not found or not configured.\nPlease set it via Plugins > DraftSync > Settings.",
+                    "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -248,7 +248,7 @@ namespace Kbg.NppPluginNET
                     OpenFileInBackground(filePath);
                     _tabs.Register(filePath, noteName);
                     _autoSaver.Track(filePath);
-                    ShowStatusBar($"NppSync: opened \"{noteName}\"");
+                    ShowStatusBar($"DraftSync: opened \"{noteName}\"");
                 }
             }
         }
@@ -445,6 +445,7 @@ namespace Kbg.NppPluginNET
 
             // Re-create Scintilla gateway for the new active buffer
             Npp.editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
+
         }
 
         // ── Remote events (all called on UI thread via UiThreadDispatcher) ─────
@@ -477,7 +478,7 @@ namespace Kbg.NppPluginNET
             OpenFileInBackground(filePath);
             _tabs.Register(filePath, noteName);
             _autoSaver.Track(filePath);
-            ShowStatusBar($"NppSync: opened remote note \"{noteName}\"");
+            ShowStatusBar($"DraftSync: opened remote note \"{noteName}\"");
         }
 
         private static void OnRemoteNoteChanged(string noteName)
@@ -505,7 +506,7 @@ namespace Kbg.NppPluginNET
             if (!string.Equals(_activeFilePath, filePath, StringComparison.OrdinalIgnoreCase))
             {
                 SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_RELOADFILE, 0, filePath);
-                ShowStatusBar($"NppSync: updated \"{noteName}\" from remote", 10000);
+                ShowStatusBar($"DraftSync: updated \"{noteName}\" from remote", 10000);
                 return;
             }
 
@@ -518,7 +519,7 @@ namespace Kbg.NppPluginNET
 
             sci.SetText(content);
             sci.SetSavePoint();
-            ShowStatusBar($"NppSync: updated \"{noteName}\" from remote");
+            ShowStatusBar($"DraftSync: updated \"{noteName}\" from remote");
 
             // Restore cursor/scroll as closely as possible
             int len = (int)sci.GetLength();
@@ -535,7 +536,7 @@ namespace Kbg.NppPluginNET
             _autoSaver.Untrack(filePath);
             _tabs.Unregister(filePath);
 
-            ShowStatusBar($"NppSync: note \"{noteName}\" was deleted remotely");
+            ShowStatusBar($"DraftSync: note \"{noteName}\" was deleted remotely");
 
             // Close the tab (this will trigger NPPN_FILEBEFORECLOSE again —
             // since we've unregistered from _tabs, that handler will be a no-op)
@@ -559,7 +560,7 @@ namespace Kbg.NppPluginNET
                 {
                     MessageBox.Show(
                         $"Note \"{tab.NoteName}\" exceeds 1 MB. Auto-save skipped.",
-                        "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -579,7 +580,7 @@ namespace Kbg.NppPluginNET
                 return;
             }
 
-            // Update metadata (written to .nppsync/<name>.meta.json — not open in Npp,
+            // Update metadata (written to .draftsync/<name>.meta.json — not open in Npp,
             // so no reload dialog risk from this write).
             var meta = _fileSync.ReadMetadata(tab.NoteName) ??
                        NoteMetadata.Create(tab.NoteName, _settings.MachineId);
@@ -660,8 +661,8 @@ namespace Kbg.NppPluginNET
             string filePath = Npp.notepad.GetCurrentFilePath();
             if (!_tabs.IsManaged(filePath))
             {
-                MessageBox.Show("The current tab is not a synced NppSync note.",
-                    "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The current tab is not a synced DraftSync note.",
+                    "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             _tabs.TryGet(filePath, out var tab);
@@ -669,7 +670,7 @@ namespace Kbg.NppPluginNET
 
             var result = MessageBox.Show(
                 $"Delete \"{noteName}\" everywhere (all machines)?",
-                "NppSync — Delete Note", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                "DraftSync — Delete Note", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result != DialogResult.Yes) return;
 
             _autoSaver.Untrack(filePath);
@@ -686,8 +687,8 @@ namespace Kbg.NppPluginNET
             string filePath = Npp.notepad.GetCurrentFilePath();
             if (!_tabs.IsManaged(filePath))
             {
-                MessageBox.Show("The current tab is not a synced NppSync note.",
-                    "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The current tab is not a synced DraftSync note.",
+                    "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             if (!CheckSyncFolder()) return;
@@ -731,7 +732,7 @@ namespace Kbg.NppPluginNET
             if (!_settings.SyncFolderValid)
             {
                 MessageBox.Show("Sync folder is not configured or does not exist.",
-                    "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             System.Diagnostics.Process.Start("explorer.exe", _settings.SyncFolder);
@@ -742,7 +743,7 @@ namespace Kbg.NppPluginNET
             _dismissed.RestoreAll();
             MessageBox.Show(
                 "Dismissed notes list cleared.\nRestart Notepad++ to re-open previously dismissed notes.",
-                "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private static void CmdShowDismissed()
@@ -750,7 +751,7 @@ namespace Kbg.NppPluginNET
             var names = new System.Collections.Generic.List<string>(_dismissed.GetAll());
             if (names.Count == 0)
             {
-                MessageBox.Show("No dismissed notes.", "NppSync — Dismissed Notes",
+                MessageBox.Show("No dismissed notes.", "DraftSync — Dismissed Notes",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -760,7 +761,7 @@ namespace Kbg.NppPluginNET
             MessageBox.Show(
                 "Dismissed notes on this machine:\r\n\r\n" + list +
                 "\r\n\r\nUse 'Restore All Dismissed Notes' to re-open all of them.",
-                "NppSync — Dismissed Notes",
+                "DraftSync — Dismissed Notes",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -768,7 +769,7 @@ namespace Kbg.NppPluginNET
         {
             if (_settings == null)
             {
-                MessageBox.Show("Plugin has not finished initializing.", "NppSync",
+                MessageBox.Show("Plugin has not finished initializing.", "DraftSync",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -797,10 +798,10 @@ namespace Kbg.NppPluginNET
         private static void CmdAbout()
         {
             MessageBox.Show(
-                "NppSync v1.0\r\n\r\n" +
+                "DraftSync v1.0\r\n\r\n" +
                 "Syncs unsaved scratch notes across machines via a shared folder.\r\n\r\n" +
                 "Machine ID: " + (_settings?.MachineId ?? "not initialized"),
-                "NppSync — About",
+                "DraftSync — About",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -810,8 +811,8 @@ namespace Kbg.NppPluginNET
         {
             if (_settings != null && _settings.SyncFolderValid) return true;
             MessageBox.Show(
-                "NppSync sync folder is not configured or does not exist.\nPlease configure it via Plugins > NppSync > Settings.",
-                "NppSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                "DraftSync sync folder is not configured or does not exist.\nPlease configure it via Plugins > DraftSync > Settings.",
+                "DraftSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
         }
     }
